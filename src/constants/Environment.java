@@ -7,7 +7,7 @@ public enum Environment {
 
     private final String name;
 
-    Environment(String name) {
+    Environment(final String name) {
         this.name = name;
     }
 

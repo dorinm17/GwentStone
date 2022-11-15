@@ -3,7 +3,15 @@ package constants;
 public enum Values {
     PLAYER_ONE(1),
     PLAYER_TWO(2),
-    HERO_HEALTH(30);
+    HERO_HEALTH(30),
+    INITIAL_MANA(1),
+    MAX_MANA_ROUND(10),
+    ROWS(4),
+    COLUMNS(5),
+    PLAYER_TWO_FRONT_ROW(1),
+    PLAYER_TWO_BACK_ROW(0),
+    PLAYER_ONE_FRONT_ROW(2),
+    PLAYER_ONE_BACK_ROW(3);
 
     private final int value;
 

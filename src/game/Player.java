@@ -2,34 +2,44 @@ package game;
 
 import java.util.ArrayList;
 
+import constants.Values;
+
 import fileio.CardInput;
 
-public class Player {
+public final class Player {
     private ArrayList<Card> deck;
     private ArrayList<Card> hand;
     private boolean isTurn;
     private Card hero;
-    private int totalWins;
+    private static int playerOneWins;
+    private static int playerTwoWins;
     private int mana;
 
-    public Player(ArrayList<CardInput> deck, CardInput hero) {
+    public Player(final ArrayList<CardInput> deck,
+                  final CardInput hero) {
         this.deck = new ArrayList<>();
-        for(CardInput card : deck) {
+        for (CardInput card : deck) {
             this.deck.add(new Card(card));
         }
 
         this.hand = new ArrayList<>();
+
         this.isTurn = false;
+
         this.hero = new Card(hero);
-        this.totalWins = 0;
-        this.mana = 0;
+        this.hero.getCard().setHealth(Values.HERO_HEALTH.getValue());
+
+        Player.playerOneWins = 0;
+        Player.playerTwoWins = 0;
+
+        this.mana = Values.INITIAL_MANA.getValue();
     }
 
     public ArrayList<Card> getDeck() {
         return deck;
     }
 
-    public void setDeck(ArrayList<Card> deck) {
+    public void setDeck(final ArrayList<Card> deck) {
         this.deck = deck;
     }
 
@@ -37,7 +47,7 @@ public class Player {
         return hand;
     }
 
-    public void setHand(ArrayList<Card> hand) {
+    public void setHand(final ArrayList<Card> hand) {
         this.hand = hand;
     }
 
@@ -45,7 +55,7 @@ public class Player {
         return isTurn;
     }
 
-    public void setTurn(boolean turn) {
+    public void setTurn(final boolean turn) {
         isTurn = turn;
     }
 
@@ -53,23 +63,31 @@ public class Player {
         return hero;
     }
 
-    public void setHero(Card hero) {
+    public void setHero(final Card hero) {
         this.hero = hero;
     }
 
-    public int getTotalWins() {
-        return totalWins;
+    public static int getPlayerOneWins() {
+        return playerOneWins;
     }
 
-    public void setTotalWins(int totalWins) {
-        this.totalWins = totalWins;
+    public static void setPlayerOneWins(final int playerOneWins) {
+        Player.playerOneWins = playerOneWins;
+    }
+
+    public static int getPlayerTwoWins() {
+        return playerTwoWins;
+    }
+
+    public static void setPlayerTwoWins(final int playerTwoWins) {
+        Player.playerTwoWins = playerTwoWins;
     }
 
     public int getMana() {
         return mana;
     }
 
-    public void setMana(int mana) {
+    public void setMana(final int mana) {
         this.mana = mana;
     }
 }

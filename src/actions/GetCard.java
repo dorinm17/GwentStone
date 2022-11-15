@@ -8,9 +8,12 @@ import constants.Environment;
 import fileio.CardInput;
 
 public abstract class GetCard {
-    public static ObjectNode execute(CardInput card) {
+    /**
+     */
+    public static ObjectNode execute(final CardInput card) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode cardObject = objectMapper.createObjectNode();
+
         cardObject.put(CardOutput.MANA.getOutput(), card.getMana());
 
         boolean environment = false;

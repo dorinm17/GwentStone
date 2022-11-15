@@ -11,9 +11,12 @@ import constants.CardOutput;
 import fileio.CardInput;
 
 public abstract class GetHero {
-    public static ObjectNode execute(CardInput hero) {
+    /**
+     */
+    public static ObjectNode execute(final CardInput hero) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode heroObject = objectMapper.createObjectNode();
+
         heroObject.put(CardOutput.MANA.getOutput(), hero.getMana());
         heroObject.put(CardOutput.DESCRIPTION.getOutput(),
                 hero.getDescription());

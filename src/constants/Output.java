@@ -9,11 +9,12 @@ public enum Output {
     AFFECTED_ROW("affectedRow"),
     X("x"),
     Y("y"),
-    OUTPUT("output");
+    OUTPUT("output"),
+    ERROR("error");
 
     private final String output;
 
-    Output(String output) {
+    Output(final String output) {
         this.output = output;
     }
 

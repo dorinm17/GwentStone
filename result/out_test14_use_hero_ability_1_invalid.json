@@ -1,48 +1,93 @@
 [ {
-  "command" : "getPlayerDeck",
-  "playerIdx" : 2,
-  "output" : [ {
-    "mana" : 5,
-    "attackDamage" : 4,
-    "health" : 4,
-    "description" : "Premium card: Insanity is always an option, now it is an absolute.",
-    "colors" : [ "Yellow", "Orange", "Red" ],
-    "name" : "Miraj"
-  }, {
-    "mana" : 2,
-    "attackDamage" : 0,
-    "health" : 3,
-    "description" : "Premium card: Nobody suspects an outcast, not even the Gods.",
-    "colors" : [ "Black", "White", "Red" ],
-    "name" : "The Cursed One"
-  }, {
-    "mana" : 2,
-    "description" : "Premium card: All is white. My mouth is frozen and I must scream.",
-    "colors" : [ "White", "Blue" ],
-    "name" : "Winterfell"
-  }, {
-    "mana" : 3,
-    "attackDamage" : 3,
-    "health" : 5,
-    "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
-    "colors" : [ "Brown", "Blue" ],
-    "name" : "Warden"
-  } ]
+  "command" : "getPlayerTurn",
+  "output" : 1
 }, {
-  "command" : "getPlayerDeck",
+  "command" : "getPlayerMana",
+  "playerIdx" : 2,
+  "output" : 22
+}, {
+  "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : [ {
+  "output" : 21
+}, {
+  "command" : "getCardsOnTable",
+  "output" : [ [ {
+    "mana" : 1,
+    "attackDamage" : 1,
+    "health" : 2,
+    "description" : "Standard card: Trained by the best, nothing will catch him off-guard.",
+    "colors" : [ "Black", "Grey", "Blue" ],
+    "name" : "Sentinel"
+  }, {
     "mana" : 3,
     "attackDamage" : 0,
-    "health" : 4,
+    "health" : 2,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Yellow", "White" ],
     "name" : "Disciple"
   }, {
+    "mana" : 3,
+    "attackDamage" : 0,
+    "health" : 4,
+    "description" : "Premium card: The will of Gods has been spoken, obey and you shall be saved...or not.",
+    "colors" : [ "Green", "Yellow", "Blue" ],
+    "name" : "Disciple"
+  }, {
+    "mana" : 2,
+    "attackDamage" : 0,
+    "health" : 4,
+    "description" : "Premium card: The will of Gods has been spoken, obey and you shall be saved...or not.",
+    "colors" : [ "Green", "Yellow", "Blue" ],
+    "name" : "Disciple"
+  }, {
     "mana" : 1,
-    "description" : "Standard card: The days are cold and so are we. We hope we can close our eyes again.",
-    "colors" : [ "White", "Grey", "Black" ],
-    "name" : "Winterfell"
+    "attackDamage" : 1,
+    "health" : 3,
+    "description" : "Standard card: Trained by the best, nothing will catch him off-guard.",
+    "colors" : [ "Black", "Grey", "Blue" ],
+    "name" : "Sentinel"
+  } ], [ {
+    "mana" : 4,
+    "attackDamage" : 6,
+    "health" : 3,
+    "description" : "Standard card: Death incarnate. No better time to die than now.",
+    "colors" : [ "Orange", "Red", "Black" ],
+    "name" : "The Ripper"
+  } ], [ {
+    "mana" : 4,
+    "attackDamage" : 1,
+    "health" : 8,
+    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
+    "colors" : [ "Red", "Purple" ],
+    "name" : "Goliath"
+  }, {
+    "mana" : 3,
+    "attackDamage" : 2,
+    "health" : 7,
+    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
+    "colors" : [ "Red", "Purple" ],
+    "name" : "Goliath"
+  }, {
+    "mana" : 4,
+    "attackDamage" : 5,
+    "health" : 4,
+    "description" : "Standard card: Death incarnate. No better time to die than now.",
+    "colors" : [ "Black", "Yellow" ],
+    "name" : "The Ripper"
+  } ], [ {
+    "mana" : 1,
+    "attackDamage" : 2,
+    "health" : 2,
+    "description" : "Standard card: Trained by the best, nothing will catch him off-guard.",
+    "colors" : [ "Black", "White" ],
+    "name" : "Sentinel"
+  }, {
+    "mana" : 1,
+    "attackDamage" : 1,
+    "health" : 3,
+    "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
+    "colors" : [ "Black", "White" ],
+    "name" : "Sentinel"
   }, {
     "mana" : 2,
     "attackDamage" : 2,
@@ -50,35 +95,23 @@
     "description" : "Standard card: Trained by the best, nothing will catch him off-guard.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
-  }, {
-    "mana" : 4,
-    "attackDamage" : 1,
-    "health" : 7,
-    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
-    "colors" : [ "Red", "Purple" ],
-    "name" : "Goliath"
+  } ] ]
+}, {
+  "command" : "getCardsInHand",
+  "playerIdx" : 2,
+  "output" : [ {
+    "mana" : 2,
+    "description" : "Standard card: The dragon was unleashed, run for your lives.",
+    "colors" : [ "Red", "Yellow" ],
+    "name" : "Firestorm"
   } ]
 }, {
-  "command" : "getPlayerHero",
+  "command" : "getCardsInHand",
   "playerIdx" : 1,
-  "output" : {
-    "mana" : 2,
-    "description" : "Premium card: An army is not sufficient, he is ready obliterate, it is time for chaos.",
-    "colors" : [ "Red", "Black", "Purple" ],
-    "name" : "General Kocioraw",
-    "health" : 30
-  }
-}, {
-  "command" : "getPlayerHero",
-  "playerIdx" : 2,
-  "output" : {
-    "mana" : 2,
-    "description" : "Premium card: Time to show who we are, the low-class was never scared of you.",
-    "colors" : [ "Brown", "Pink", "Purple" ],
-    "name" : "King Mudface",
-    "health" : 30
-  }
-}, {
-  "command" : "getPlayerTurn",
-  "output" : 2
+  "output" : [ {
+    "mana" : 1,
+    "description" : "Premium card: The fury of hell is upon us, please kill us.",
+    "colors" : [ "Red", "Yellow" ],
+    "name" : "Firestorm"
+  } ]
 } ]

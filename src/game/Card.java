@@ -2,7 +2,7 @@ package game;
 
 import fileio.CardInput;
 
-public class Card {
+public final class Card {
     private CardInput card;
     private boolean attacked;
     private boolean usedAbility;
@@ -10,7 +10,7 @@ public class Card {
     private int x;
     private int y;
 
-    public Card(CardInput card) {
+    public Card(final CardInput card) {
         this.card = new CardInput();
         this.card.setAttackDamage(card.getAttackDamage());
         this.card.setHealth(card.getHealth());
@@ -30,23 +30,23 @@ public class Card {
         return card;
     }
 
-    public void setCard(CardInput card) {
+    public void setCard(final CardInput card) {
         this.card = card;
     }
 
-    public boolean hasAttacked() {
+    public boolean getAttacked() {
         return attacked;
     }
 
-    public void setAttacked(boolean attacked) {
+    public void setAttacked(final boolean attacked) {
         this.attacked = attacked;
     }
 
-    public boolean hasUsedAbility() {
+    public boolean getUsedAbility() {
         return usedAbility;
     }
 
-    public void setUsedAbility(boolean usedAbility) {
+    public void setUsedAbility(final boolean usedAbility) {
         this.usedAbility = usedAbility;
     }
 
@@ -54,7 +54,7 @@ public class Card {
         return frozen;
     }
 
-    public void setFrozen(boolean frozen) {
+    public void setFrozen(final boolean frozen) {
         this.frozen = frozen;
     }
 
@@ -62,7 +62,7 @@ public class Card {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(final int x) {
         this.x = x;
     }
 
@@ -70,9 +70,7 @@ public class Card {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(final int y) {
         this.y = y;
     }
-
-
 }

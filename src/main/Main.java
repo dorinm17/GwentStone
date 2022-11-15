@@ -80,8 +80,8 @@ public final class Main {
     public static void action(final String filePath1,
                               final String filePath2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        Input inputData = objectMapper.readValue(new File(CheckerConstants.TESTS_PATH + filePath1),
-                Input.class);
+        Input inputData = objectMapper.readValue(new File(
+                CheckerConstants.TESTS_PATH + filePath1), Input.class);
 
         ArrayList<ArrayList<CardInput>> playerOneDecks =
                 inputData.getPlayerOneDecks().getDecks();
@@ -91,10 +91,11 @@ public final class Main {
 
         Gameplay gameplay = Gameplay.getInstance(playerOneDecks,
                 playerTwoDecks, gamesList);
-
         ArrayNode output = gameplay.runGames();
+        gameplay.setInstance();
 
-        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
+        ObjectWriter objectWriter =
+                objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);
     }
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import fileio.ActionsInput;
 
 import fileio.CardInput;
@@ -16,7 +18,7 @@ import java.util.Random;
 
 import java.util.Collections;
 
-public class Gameplay {
+public final class Gameplay {
     private static volatile Gameplay instance = null;
 
     private final ArrayList<ArrayList<CardInput>> playerOneDecks;
@@ -31,6 +33,8 @@ public class Gameplay {
         this.gamesList = gamesList;
     }
 
+    /**
+     */
     public static Gameplay getInstance(
             final ArrayList<ArrayList<CardInput>> playerOneDecks,
             final ArrayList<ArrayList<CardInput>> playerTwoDecks,
@@ -46,6 +50,14 @@ public class Gameplay {
         return instance;
     }
 
+    /**
+     */
+    public void setInstance() {
+        instance = null;
+    }
+
+    /**
+     */
     public ArrayNode runGames() {
         Random random;
         ArrayList<CardInput> deck1;
@@ -77,7 +89,11 @@ public class Gameplay {
             match = new Match(startingPlayer, deck1, deck2, hero1, hero2);
 
             for (ActionsInput action : game.getActions()) {
-                output.add(match.execute(action));
+                ObjectNode result = match.execute(action);
+
+                if (result != null) {
+                    output.add(result);
+                }
             }
         }
 

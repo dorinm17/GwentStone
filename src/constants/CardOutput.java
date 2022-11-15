@@ -10,7 +10,7 @@ public enum CardOutput {
 
     private final String output;
 
-    CardOutput(String output) {
+    CardOutput(final String output) {
         this.output = output;
     }
 

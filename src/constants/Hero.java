@@ -8,7 +8,7 @@ public enum Hero {
 
     private final String name;
 
-    Hero(String name) {
+    Hero(final String name) {
         this.name = name;
     }
 

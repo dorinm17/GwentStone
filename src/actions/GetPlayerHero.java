@@ -13,10 +13,14 @@ import fileio.ActionsInput;
 import game.Player;
 
 public abstract class GetPlayerHero {
-    public static ObjectNode execute(ActionsInput action,
-                                     Player playerOne, Player playerTwo) {
+    /**
+     */
+    public static ObjectNode execute(final ActionsInput action,
+                                     final Player playerOne,
+                                     final Player playerTwo) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode result = objectMapper.createObjectNode();
+
         result.put(Output.COMMAND.getOutput(), action.getCommand());
         result.put(Output.PLAYER_IDX.getOutput(), action.getPlayerIdx());
 
