@@ -1,5 +1,7 @@
 package game;
 
+import actions.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -73,124 +75,24 @@ public class Match {
                         // getCardsInHand();
                         break;
                     case GET_PLAYER_DECK:
-                        result = getPlayerDeck(action);
+                        result = GetPlayerDeck.execute(action,
+                                playerOne, playerTwo);
                         break;
                     case GET_CARDS_ON_TABLE:
                         // getCardsOnTable();
                         break;
                     case GET_PLAYER_TURN:
-                        result = getPlayerTurn();
+                        result = GetPlayerTurn.execute(playerOne);
                         break;
                     case GET_CARD_AT_POSITION:
                         // getCardAtPosition();
                         break;
                     case GET_PLAYER_HERO:
-                        result = getPlayerHero(action);
+                        result = GetPlayerHero.execute(action,
+                                playerOne, playerTwo);
                         break;
                 }
             }
-        }
-
-        return result;
-    }
-
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    private ObjectNode getCard(CardInput card) {
-        ObjectNode cardObject = objectMapper.createObjectNode();
-        cardObject.put(CardOutput.MANA.getOutput(), card.getMana());
-
-        boolean environment = false;
-        for (Environment e : Environment.values()) {
-            if (e.getName().equals(card.getName())) {
-                environment = true;
-                break;
-            }
-        }
-
-        if (!environment) {
-            cardObject.put(CardOutput.ATTACK_DAMAGE.getOutput(),
-                    card.getAttackDamage());
-            cardObject.put(CardOutput.HEALTH.getOutput(), card.getHealth());
-        }
-
-        cardObject.put(CardOutput.DESCRIPTION.getOutput(),
-                card.getDescription());
-
-        ArrayNode colors = objectMapper.createArrayNode();
-        for (String color : card.getColors()) {
-            colors.add(color);
-        }
-        cardObject.set(CardOutput.COLORS.getOutput(), colors);
-
-        cardObject.put(CardOutput.NAME.getOutput(), card.getName());
-
-        return cardObject;
-    }
-
-    private ObjectNode getHero(CardInput hero) {
-        ObjectNode heroObject = objectMapper.createObjectNode();
-        heroObject.put(CardOutput.MANA.getOutput(), hero.getMana());
-        heroObject.put(CardOutput.DESCRIPTION.getOutput(),
-                hero.getDescription());
-
-        ArrayNode colors = objectMapper.createArrayNode();
-        for (String color : hero.getColors()) {
-            colors.add(color);
-        }
-        heroObject.set(CardOutput.COLORS.getOutput(), colors);
-
-        heroObject.put(CardOutput.NAME.getOutput(), hero.getName());
-        heroObject.put(CardOutput.HEALTH.getOutput(), hero.getHealth());
-
-        return heroObject;
-    }
-
-    private ObjectNode getPlayerDeck(ActionsInput action) {
-        ObjectNode result = objectMapper.createObjectNode();
-        result.put(Output.COMMAND.getOutput(), action.getCommand());
-        result.put(Output.PLAYER_IDX.getOutput(), action.getPlayerIdx());
-
-        ArrayNode deck = objectMapper.createArrayNode();
-        if (action.getPlayerIdx() == Values.PLAYER_ONE.getValue()) {
-            for (Card card : playerOne.getDeck()) {
-                deck.add(getCard(card.getCard()));
-            }
-            result.set(Output.OUTPUT.getOutput(), deck);
-        } else {
-            for (Card card : playerTwo.getDeck()) {
-                deck.add(getCard(card.getCard()));
-            }
-            result.set(Output.OUTPUT.getOutput(), deck);
-        }
-
-        return result;
-    }
-
-    private ObjectNode getPlayerHero(ActionsInput action) {
-        ObjectNode result = objectMapper.createObjectNode();
-        result.put(Output.COMMAND.getOutput(), action.getCommand());
-        result.put(Output.PLAYER_IDX.getOutput(), action.getPlayerIdx());
-
-        if (action.getPlayerIdx() == Values.PLAYER_ONE.getValue()) {
-            result.set(Output.OUTPUT.getOutput(),
-                    getHero(playerOne.getHero().getCard()));
-        } else {
-            result.set(Output.OUTPUT.getOutput(),
-                    getHero(playerTwo.getHero().getCard()));
-        }
-
-        return result;
-    }
-
-    private ObjectNode getPlayerTurn() {
-        ObjectNode result = objectMapper.createObjectNode();
-        result.put(Output.COMMAND.getOutput(), Command.GET_PLAYER_TURN.getCommand());
-
-        if (playerOne.getTurn()) {
-            result.put(Output.OUTPUT.getOutput(), Values.PLAYER_ONE.getValue());
-        } else {
-            result.put(Output.OUTPUT.getOutput(), Values.PLAYER_TWO.getValue());
         }
 
         return result;
