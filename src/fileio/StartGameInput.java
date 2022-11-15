@@ -1,5 +1,7 @@
 package fileio;
 
+import constants.Values;
+
 public final class StartGameInput {
     private int playerOneDeckIdx;
     private int playerTwoDeckIdx;
@@ -41,6 +43,7 @@ public final class StartGameInput {
 
     public void setPlayerOneHero(final CardInput playerOneHero) {
         this.playerOneHero = playerOneHero;
+        playerOneHero.setHealth(Values.HERO_HEALTH.getValue());
     }
 
     public CardInput getPlayerTwoHero() {
@@ -49,6 +52,7 @@ public final class StartGameInput {
 
     public void setPlayerTwoHero(final CardInput playerTwoHero) {
         this.playerTwoHero = playerTwoHero;
+        playerTwoHero.setHealth(Values.HERO_HEALTH.getValue());
     }
 
     public int getStartingPlayer() {

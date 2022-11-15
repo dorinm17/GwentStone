@@ -18,7 +18,8 @@ public enum Command {
     GET_FROZEN_CARDS_ON_TABLE("getFrozenCardsOnTable"),
     GET_TOTAL_GAMES_PLAYED("getTotalGamesPlayed"),
     GET_PLAYER_ONE_WINS("getPlayerOneWins"),
-    GET_PLAYER_TWO_WINS("getPlayerTwoWins");
+    GET_PLAYER_TWO_WINS("getPlayerTwoWins"),
+    GET_PLAYER_HERO("getPlayerHero");
 
     private final String command;
 

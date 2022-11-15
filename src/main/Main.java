@@ -3,16 +3,32 @@ package main;
 import checker.Checker;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.databind.ObjectWriter;
+
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
 import checker.CheckerConstants;
+
+import fileio.CardInput;
+
+import fileio.GameInput;
+
 import fileio.Input;
 
+import game.Gameplay;
+
 import java.io.File;
+
 import java.io.IOException;
+
 import java.nio.file.Files;
+
 import java.nio.file.Path;
+
 import java.nio.file.Paths;
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -67,9 +83,16 @@ public final class Main {
         Input inputData = objectMapper.readValue(new File(CheckerConstants.TESTS_PATH + filePath1),
                 Input.class);
 
-        ArrayNode output = objectMapper.createArrayNode();
+        ArrayList<ArrayList<CardInput>> playerOneDecks =
+                inputData.getPlayerOneDecks().getDecks();
+        ArrayList<ArrayList<CardInput>> playerTwoDecks =
+                inputData.getPlayerTwoDecks().getDecks();
+        ArrayList<GameInput> gamesList = inputData.getGames();
 
-        //TODO add here the entry point to your implementation
+        Gameplay gameplay = Gameplay.getInstance(playerOneDecks,
+                playerTwoDecks, gamesList);
+
+        ArrayNode output = gameplay.runGames();
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);
