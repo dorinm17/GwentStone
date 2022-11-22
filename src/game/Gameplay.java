@@ -24,6 +24,8 @@ public final class Gameplay {
     private final ArrayList<ArrayList<CardInput>> playerOneDecks;
     private final ArrayList<ArrayList<CardInput>> playerTwoDecks;
     private final ArrayList<GameInput> gamesList;
+    private static int playerOneWins;
+    private static int playerTwoWins;
 
     private Gameplay(final ArrayList<ArrayList<CardInput>> playerOneDecks,
                     final ArrayList<ArrayList<CardInput>> playerTwoDecks,
@@ -31,6 +33,8 @@ public final class Gameplay {
         this.playerOneDecks = playerOneDecks;
         this.playerTwoDecks = playerTwoDecks;
         this.gamesList = gamesList;
+        playerOneWins = 0;
+        playerTwoWins = 0;
     }
 
     /**
@@ -98,5 +102,21 @@ public final class Gameplay {
         }
 
         return output;
+    }
+
+    public static int getPlayerOneWins() {
+        return playerOneWins;
+    }
+
+    public static void setPlayerOneWins(final int playerOneWins) {
+        Gameplay.playerOneWins = playerOneWins;
+    }
+
+    public static int getPlayerTwoWins() {
+        return playerTwoWins;
+    }
+
+    public static void setPlayerTwoWins(final int playerTwoWins) {
+        Gameplay.playerTwoWins = playerTwoWins;
     }
 }

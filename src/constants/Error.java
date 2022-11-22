@@ -7,7 +7,7 @@ public enum Error {
     NOT_ENEMY("Attacked card does not belong to the enemy."),
     ATTACKER_ALREADY_ATTACKED("Attacker card has already attacked this turn."),
     FROZEN("Attacker card is frozen."),
-    NOT_TANK("”Attacked card is not of type 'Tank'."),
+    NOT_TANK("Attacked card is not of type 'Tank'."),
     NOT_CURRENT_PLAYER("Attacked card does not belong to the current player."),
     HERO_ALREADY_ATTACKED("Hero has already attacked this turn."),
     NOT_ENEMY_ROW_HERO("Selected row does not belong to the enemy."),
@@ -17,7 +17,7 @@ public enum Error {
     NOT_ENOUGH_MANA_HERO("Not enough mana to use hero's ability."),
     NOT_ENEMY_ROW_ENVIRONMENT("Chosen row does not belong to the enemy."),
     NO_STEALING_FULL_ROW("Cannot steal enemy card since the player's row is full."),
-    NO_CARD("No card at that position.");
+    NO_CARD("No card available at that position.");
 
     private final String message;
 

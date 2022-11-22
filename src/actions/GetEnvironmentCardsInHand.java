@@ -6,15 +6,19 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import constants.Environment;
+
 import constants.Output;
 
 import constants.Values;
+
 import fileio.ActionsInput;
 
 import game.Card;
+
 import game.Player;
 
-public abstract class GetCardsInHand {
+public abstract class GetEnvironmentCardsInHand {
     /**
      */
     public static ObjectNode execute(final ActionsInput action,
@@ -26,17 +30,25 @@ public abstract class GetCardsInHand {
         result.put(Output.COMMAND.getOutput(), action.getCommand());
         result.put(Output.PLAYER_IDX.getOutput(), action.getPlayerIdx());
 
-        ArrayNode hand = objectMapper.createArrayNode();
+        ArrayNode handEnvironment = objectMapper.createArrayNode();
         if (action.getPlayerIdx() == Values.PLAYER_ONE.getValue()) {
             for (Card card : playerOne.getHand()) {
-                hand.add(GetCard.execute(card.getCard()));
+                for (Environment e : Environment.values()) {
+                    if (card.getCard().getName().equals(e.getName())) {
+                        handEnvironment.add(GetCard.execute(card.getCard()));
+                    }
+                }
             }
         } else {
             for (Card card : playerTwo.getHand()) {
-                hand.add(GetCard.execute(card.getCard()));
+                for (Environment e : Environment.values()) {
+                    if (card.getCard().getName().equals(e.getName())) {
+                        handEnvironment.add(GetCard.execute(card.getCard()));
+                    }
+                }
             }
         }
-        result.set(Output.OUTPUT.getOutput(), hand);
+        result.set(Output.OUTPUT.getOutput(), handEnvironment);
 
         return result;
     }

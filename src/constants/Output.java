@@ -10,7 +10,8 @@ public enum Output {
     X("x"),
     Y("y"),
     OUTPUT("output"),
-    ERROR("error");
+    ERROR("error"),
+    GAME_ENDED("gameEnded");
 
     private final String output;
 

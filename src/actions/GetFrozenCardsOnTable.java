@@ -12,7 +12,7 @@ import fileio.ActionsInput;
 
 import game.Card;
 
-public abstract class GetCardsOnTable {
+public abstract class GetFrozenCardsOnTable {
     /**
      */
     public static ObjectNode execute(final ActionsInput action,
@@ -23,16 +23,15 @@ public abstract class GetCardsOnTable {
         result.put(Output.COMMAND.getOutput(), action.getCommand());
 
         ArrayNode tableObject = objectMapper.createArrayNode();
+        ArrayNode rowObject = objectMapper.createArrayNode();
         for (Card[] row : board) {
-            ArrayNode rowObject = objectMapper.createArrayNode();
-
             for (Card card : row) {
                 if (card != null) {
-                    rowObject.add(GetCard.execute(card.getCard()));
+                    if (card.isFrozen()) {
+                        rowObject.add(GetCard.execute(card.getCard()));
+                    }
                 }
             }
-
-            tableObject.add(rowObject);
         }
         result.set(Output.OUTPUT.getOutput(), tableObject);
 

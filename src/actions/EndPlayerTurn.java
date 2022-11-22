@@ -16,28 +16,30 @@ public abstract class EndPlayerTurn {
 
             for (int i = Values.PLAYER_ONE_FRONT_ROW.getValue();
                  i <= Values.PLAYER_ONE_BACK_ROW.getValue(); i++) {
-                for (Card card : match.getTable()[i]) {
+                for (Card card : match.getBoard()[i]) {
                     if (card != null) {
                         card.setAttacked(false);
-                        card.setUsedAbility(false);
                         card.setFrozen(false);
                     }
                 }
             }
+
+            match.getPlayerOne().getHero().setAttacked(false);
         } else {
             match.getPlayerOne().setTurn(true);
             match.getPlayerTwo().setTurn(false);
 
             for (int i = Values.PLAYER_TWO_BACK_ROW.getValue();
                  i <= Values.PLAYER_TWO_FRONT_ROW.getValue(); i++) {
-                for (Card card : match.getTable()[i]) {
+                for (Card card : match.getBoard()[i]) {
                     if (card != null) {
                         card.setAttacked(false);
-                        card.setUsedAbility(false);
                         card.setFrozen(false);
                     }
                 }
             }
+
+            match.getPlayerTwo().getHero().setAttacked(false);
         }
 
         match.setTurn(match.getTurn() + 1);

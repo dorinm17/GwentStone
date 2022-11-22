@@ -30,120 +30,81 @@ public abstract class PlaceCard {
     public static ObjectNode execute(final ActionsInput action,
                                      final Player playerOne,
                                      final Player playerTwo,
-                                     final Card[][] table) {
+                                     final Card[][] board) {
         ObjectNode result = null;
-        boolean error1 = false;
-        boolean error2 = false;
-        boolean error3 = true;
+        boolean errorEnvironment = false;
+        boolean errorMana = false;
+        boolean errorFullRow = true;
+        Player currentPlayer;
+        int currentFrontRow;
+        int currentBackRow;
 
         if (playerOne.getTurn()) {
-            Card cardToBePlaced = playerOne.getHand().get(action.getHandIdx());
-            CardInput cardToBePlacedInput = cardToBePlaced.getCard();
-
-            for (Environment e : Environment.values()) {
-                if (e.getName().equals(cardToBePlacedInput.getName())) {
-                    error1 = true;
-                    break;
-                }
-            }
-
-            if (cardToBePlacedInput.getMana() > playerOne.getMana()) {
-                error2 = true;
-            }
-
-            if (!error1 && !error2) {
-                int playerOneFrontRow = Values.PLAYER_ONE_FRONT_ROW.getValue();
-                for (MinionFrontRow m : MinionFrontRow.values()) {
-                    if (m.getName().equals(cardToBePlacedInput.getName())) {
-                        for (int i = 0; i < Values.COLUMNS.getValue(); i++) {
-                            if (table[playerOneFrontRow][i] == null) {
-                                error3 = false;
-                                table[playerOneFrontRow][i] = cardToBePlaced;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                int playerOneBackRow = Values.PLAYER_ONE_BACK_ROW.getValue();
-                for (MinionBackRow m : MinionBackRow.values()) {
-                    if (m.getName().equals(cardToBePlacedInput.getName())) {
-                        for (int i = 0; i < Values.COLUMNS.getValue(); i++) {
-                            if (table[playerOneBackRow][i] == null) {
-                                error3 = false;
-                                table[playerOneBackRow][i] = cardToBePlaced;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (!error3) {
-                    playerOne.setMana(playerOne.getMana()
-                            - cardToBePlacedInput.getMana());
-                    playerOne.getHand().remove(action.getHandIdx());
-                }
-            }
+            currentPlayer = playerOne;
+            currentFrontRow = Values.PLAYER_ONE_FRONT_ROW.getValue();
+            currentBackRow = Values.PLAYER_ONE_BACK_ROW.getValue();
         } else {
-            Card cardToBePlaced = playerTwo.getHand().get(action.getHandIdx());
-            CardInput cardToBePlacedInput = cardToBePlaced.getCard();
+            currentPlayer = playerTwo;
+            currentFrontRow = Values.PLAYER_TWO_FRONT_ROW.getValue();
+            currentBackRow = Values.PLAYER_TWO_BACK_ROW.getValue();
+        }
 
-            for (Environment e : Environment.values()) {
-                if (e.getName().equals(cardToBePlacedInput.getName())) {
-                    error1 = true;
-                    break;
-                }
-            }
+        Card cardToBePlaced = currentPlayer.getHand().get(action.getHandIdx());
+        CardInput cardToBePlacedInput = cardToBePlaced.getCard();
 
-            if (cardToBePlacedInput.getMana() > playerTwo.getMana()) {
-                error2 = true;
-            }
-
-            if (!error1 && !error2) {
-                int playerTwoFrontRow = Values.PLAYER_TWO_FRONT_ROW.getValue();
-                for (MinionFrontRow m : MinionFrontRow.values()) {
-                    if (m.getName().equals(cardToBePlacedInput.getName())) {
-                        for (int i = 0; i < Values.COLUMNS.getValue(); i++) {
-                            if (table[playerTwoFrontRow][i] == null) {
-                                error3 = false;
-                                table[playerTwoFrontRow][i] = cardToBePlaced;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                int playerTwoBackRow = Values.PLAYER_TWO_BACK_ROW.getValue();
-                for (MinionBackRow m : MinionBackRow.values()) {
-                    if (m.getName().equals(cardToBePlacedInput.getName())) {
-                        for (int i = 0; i < Values.COLUMNS.getValue(); i++) {
-                            if (table[playerTwoBackRow][i] == null) {
-                                error3 = false;
-                                table[playerTwoBackRow][i] = cardToBePlaced;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (!error3) {
-                    playerTwo.setMana(playerTwo.getMana()
-                            - cardToBePlacedInput.getMana());
-                    playerTwo.getHand().remove(action.getHandIdx());
-                }
+        for (Environment e : Environment.values()) {
+            if (e.getName().equals(cardToBePlacedInput.getName())) {
+                errorEnvironment = true;
+                break;
             }
         }
 
-        if (error1 || error2 || error3) {
+        if (cardToBePlacedInput.getMana() > currentPlayer.getMana()) {
+            errorMana = true;
+        }
+
+        if (!errorEnvironment && !errorMana) {
+            for (MinionFrontRow m : MinionFrontRow.values()) {
+                if (m.getName().equals(cardToBePlacedInput.getName())) {
+                    for (int i = 0; i < Values.COLUMNS.getValue(); i++) {
+                        if (board[currentFrontRow][i] == null) {
+                            errorFullRow = false;
+                            board[currentFrontRow][i] = cardToBePlaced;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (MinionBackRow m : MinionBackRow.values()) {
+                if (m.getName().equals(cardToBePlacedInput.getName())) {
+                    for (int i = 0; i < Values.COLUMNS.getValue(); i++) {
+                        if (board[currentBackRow][i] == null) {
+                            errorFullRow = false;
+                            board[currentBackRow][i] = cardToBePlaced;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!errorFullRow) {
+                currentPlayer.setMana(currentPlayer.getMana()
+                        - cardToBePlacedInput.getMana());
+                currentPlayer.getHand().remove(action.getHandIdx());
+            }
+        }
+
+        if (errorEnvironment || errorMana || errorFullRow) {
             ObjectMapper objectMapper = new ObjectMapper();
             result = objectMapper.createObjectNode();
             result.put(Output.COMMAND.getOutput(), action.getCommand());
             result.put(Output.HAND_IDX.getOutput(), action.getHandIdx());
 
-            if (error1) {
+            if (errorEnvironment) {
                 result.put(Output.ERROR.getOutput(),
                         Error.ENVIRONMENT_NOT_ALLOWED.getMessage());
-            } else if (error2) {
+            } else if (errorMana) {
                 result.put(Output.ERROR.getOutput(),
                         Error.NOT_ENOUGH_MANA_MINION.getMessage());
             } else {

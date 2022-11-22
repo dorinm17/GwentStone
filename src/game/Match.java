@@ -16,6 +16,28 @@ import actions.GetPlayerTurn;
 
 import actions.PlaceCard;
 
+import actions.UseEnvironmentCard;
+
+import actions.GetEnvironmentCardsInHand;
+
+import actions.GetCardAtPosition;
+
+import actions.GetFrozenCardsOnTable;
+
+import actions.CardUsesAttack;
+
+import actions.CardUsesAbility;
+
+import actions.UseAttackHero;
+
+import actions.UseHeroAbility;
+
+import actions.GetTotalGamesPlayed;
+
+import actions.GetPlayerOneWins;
+
+import actions.GetPlayerTwoWins;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import constants.Values;
@@ -29,9 +51,9 @@ import fileio.CardInput;
 import java.util.ArrayList;
 
 public final class Match {
-    private Player playerOne;
-    private Player playerTwo;
-    private Card[][] table = new Card[Values.ROWS.getValue()]
+    private final Player playerOne;
+    private final Player playerTwo;
+    private final Card[][] board = new Card[Values.ROWS.getValue()]
             [Values.COLUMNS.getValue()];
     private int turn;
     private int mana;
@@ -58,7 +80,7 @@ public final class Match {
 
         for (int i = 0; i < Values.ROWS.getValue(); i++) {
             for (int j = 0; j < Values.COLUMNS.getValue(); j++) {
-                table[i][j] = null;
+                board[i][j] = null;
             }
         }
     }
@@ -76,22 +98,25 @@ public final class Match {
                         break;
                     case PLACE_CARD:
                         result = PlaceCard.execute(action, playerOne,
-                                playerTwo, table);
+                                playerTwo, board);
                         break;
                     case CARD_USES_ATTACK:
-                        // cardUsesAttack();
+                        result = CardUsesAttack.execute(action, board);
                         break;
                     case CARD_USES_ABILITY:
-                        // cardUsesAbility();
+                        result = CardUsesAbility.execute(action, board);
                         break;
                     case USE_ATTACK_HERO:
-                        // useAttackHero();
+                        result = UseAttackHero.execute(action, playerOne,
+                                playerTwo, board);
                         break;
                     case USE_HERO_ABILITY:
-                        // useHeroAbility();
+                        result = UseHeroAbility.execute(action, playerOne,
+                                playerTwo, board);
                         break;
                     case USE_ENVIRONMENT_CARD:
-                        // useEnvironmentCard();
+                        result = UseEnvironmentCard.execute(action, playerOne,
+                                playerTwo, board);
                         break;
                     case GET_CARDS_IN_HAND:
                         result = GetCardsInHand.execute(action,
@@ -102,13 +127,13 @@ public final class Match {
                                 playerOne, playerTwo);
                         break;
                     case GET_CARDS_ON_TABLE:
-                        result = GetCardsOnTable.execute(action, table);
+                        result = GetCardsOnTable.execute(action, board);
                         break;
                     case GET_PLAYER_TURN:
                         result = GetPlayerTurn.execute(playerOne);
                         break;
                     case GET_CARD_AT_POSITION:
-                        // getCardAtPosition();
+                        result = GetCardAtPosition.execute(action, board);
                         break;
                     case GET_PLAYER_HERO:
                         result = GetPlayerHero.execute(action,
@@ -117,6 +142,22 @@ public final class Match {
                     case GET_PLAYER_MANA:
                         result = GetPlayerMana.execute(action,
                                 playerOne, playerTwo);
+                        break;
+                    case GET_ENVIRONMENT_CARDS_IN_HAND:
+                        result = GetEnvironmentCardsInHand.execute(action,
+                                playerOne, playerTwo);
+                        break;
+                    case GET_FROZEN_CARDS_ON_TABLE:
+                        result = GetFrozenCardsOnTable.execute(action, board);
+                        break;
+                    case GET_TOTAL_GAMES_PLAYED:
+                        result = GetTotalGamesPlayed.execute();
+                        break;
+                    case GET_PLAYER_ONE_WINS:
+                        result = GetPlayerOneWins.execute();
+                        break;
+                    case GET_PLAYER_TWO_WINS:
+                        result = GetPlayerTwoWins.execute();
                         break;
                     default:
                         break;
@@ -131,24 +172,12 @@ public final class Match {
         return playerOne;
     }
 
-    public void setPlayerOne(final Player playerOne) {
-        this.playerOne = playerOne;
-    }
-
     public Player getPlayerTwo() {
         return playerTwo;
     }
 
-    public void setPlayerTwo(final Player playerTwo) {
-        this.playerTwo = playerTwo;
-    }
-
-    public Card[][] getTable() {
-        return table;
-    }
-
-    public void setTable(final Card[][] table) {
-        this.table = table;
+    public Card[][] getBoard() {
+        return board;
     }
 
     public int getTurn() {

@@ -5,7 +5,6 @@ import fileio.CardInput;
 public final class Card {
     private CardInput card;
     private boolean attacked;
-    private boolean usedAbility;
     private boolean frozen;
     private int x;
     private int y;
@@ -20,7 +19,6 @@ public final class Card {
         this.card.setDescription(card.getDescription());
 
         this.attacked = false;
-        this.usedAbility = false;
         this.frozen = false;
         this.x = -1;
         this.y = -1;
@@ -40,14 +38,6 @@ public final class Card {
 
     public void setAttacked(final boolean attacked) {
         this.attacked = attacked;
-    }
-
-    public boolean getUsedAbility() {
-        return usedAbility;
-    }
-
-    public void setUsedAbility(final boolean usedAbility) {
-        this.usedAbility = usedAbility;
     }
 
     public boolean isFrozen() {

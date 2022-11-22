@@ -11,7 +11,12 @@ public enum Values {
     PLAYER_TWO_FRONT_ROW(1),
     PLAYER_TWO_BACK_ROW(0),
     PLAYER_ONE_FRONT_ROW(2),
-    PLAYER_ONE_BACK_ROW(3);
+    PLAYER_ONE_BACK_ROW(3),
+    GODS_PLAN(2),
+    WEAK_KNEES(2),
+    FIRESTORM(1),
+    EARTH_BORN(1),
+    BLOOD_THIRST(1);
 
     private final int value;
 

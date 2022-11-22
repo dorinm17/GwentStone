@@ -2,17 +2,17 @@ package actions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import constants.Output;
+
+import constants.Error;
 
 import fileio.ActionsInput;
 
 import game.Card;
 
-public abstract class GetCardsOnTable {
+public abstract class GetCardAtPosition {
     /**
      */
     public static ObjectNode execute(final ActionsInput action,
@@ -21,20 +21,18 @@ public abstract class GetCardsOnTable {
         ObjectNode result = objectMapper.createObjectNode();
 
         result.put(Output.COMMAND.getOutput(), action.getCommand());
+        result.put(Output.X.getOutput(), action.getX());
+        result.put(Output.Y.getOutput(), action.getY());
 
-        ArrayNode tableObject = objectMapper.createArrayNode();
-        for (Card[] row : board) {
-            ArrayNode rowObject = objectMapper.createArrayNode();
+        int x = action.getX();
+        int y = action.getY();
 
-            for (Card card : row) {
-                if (card != null) {
-                    rowObject.add(GetCard.execute(card.getCard()));
-                }
-            }
-
-            tableObject.add(rowObject);
+        if (board[x][y] != null) {
+            ObjectNode cardObject = GetCard.execute(board[x][y].getCard());
+            result.set(Output.OUTPUT.getOutput(), cardObject);
+        } else {
+            result.put(Output.OUTPUT.getOutput(), Error.NO_CARD.getMessage());
         }
-        result.set(Output.OUTPUT.getOutput(), tableObject);
 
         return result;
     }
